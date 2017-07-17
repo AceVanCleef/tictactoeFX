@@ -13,6 +13,9 @@ public class RootPane extends BorderPane implements ViewMixin{
 
     private Header menuBar;
     private GameBoard gameBoard;
+    private PlayerOverview player01;
+    private PlayerOverview player02;
+    private ScoreBoardWrapper score;
 
     public RootPane(RootPM pm){
         this.pm = pm;
@@ -31,11 +34,19 @@ public class RootPane extends BorderPane implements ViewMixin{
         menuBar = new Header(pm);
 
         gameBoard = new GameBoard(pm);
+
+        player01 = new PlayerOverview(pm, "Player 01");
+        player02 = new PlayerOverview(pm, "Player 02");
+
+        score = new ScoreBoardWrapper(pm);
     }
 
     @Override
     public void layoutParts() {
         setTop(menuBar);
         setCenter(gameBoard);
+        setLeft(player01);
+        setRight(player02);
+        setBottom(score);
     }
 }
