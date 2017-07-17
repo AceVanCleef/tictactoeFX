@@ -21,6 +21,12 @@ public class RootPane extends BorderPane implements ViewMixin{
     }
 
     @Override
+    public void initializeSelf() {
+        String stylesheet = getClass().getResource("style.css").toExternalForm();
+        this.getStylesheets().addAll(stylesheet);
+    }
+
+    @Override
     public void initializeParts() {
         menuBar = new Header(pm);
 
