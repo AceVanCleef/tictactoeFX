@@ -43,6 +43,14 @@ public class BoardField extends StackPane implements ViewMixin {
     }
 
     @Override
+    public void addEventHandlers() {
+        this.setOnMousePressed(event -> {
+            pm.nextPlayer();
+            System.out.println(pm.getCurrentPlayerId());
+        });
+    }
+
+    @Override
     public void setupBindings() {
         //resizing of SVGPaths
         cross.scaleXProperty().bind(this.widthProperty().multiply(0.025));

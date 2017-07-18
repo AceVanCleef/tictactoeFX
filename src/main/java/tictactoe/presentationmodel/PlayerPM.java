@@ -10,12 +10,13 @@ import javafx.beans.property.StringProperty;
  */
 public class PlayerPM {
 
+    /* identifies the player and allows player selection by ID. */
     private final IntegerProperty id = new SimpleIntegerProperty();
 
-    /* the name shown in the GUI */
+    /* stores the name shown in the GUI */
     private final StringProperty name = new SimpleStringProperty();
 
-    /* how often a player has won */
+    /* stores how often a player has won */
     private final IntegerProperty score = new SimpleIntegerProperty();
 
 

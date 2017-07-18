@@ -16,6 +16,10 @@ public class RootPM {
 
     private final ObservableList<BoardFieldPM> allFields = FXCollections.observableArrayList();
 
+
+    /* the maximum amount of players this game has. */
+    public final static int AMOUNT_OF_PLAYERS = 2;
+
     private final ObservableList<PlayerPM> allPlayers = FXCollections.observableArrayList();
     private final IntegerProperty currentPlayerId = new SimpleIntegerProperty();
 
@@ -26,10 +30,29 @@ public class RootPM {
         }
 
         //prepare playerPMs
-        allPlayers.addAll(new PlayerPM(1), new PlayerPM(2));
+        for (int i = 0; i < AMOUNT_OF_PLAYERS; ++i) {
+            allPlayers.add(new PlayerPM(i + 1));    //no mather how many players, their IDs must be in numerical sequence.
+        }
 
         //this player begins the match
         setCurrentPlayerId(allPlayers.get(0).getId());
+    }
+
+
+    public void nextPlayer(){
+        //siple switch approach using magical numbers
+//        if ( getCurrentPlayerId() == 1){
+//            setCurrentPlayerId(2);
+//        } else if ( getCurrentPlayerId() == 2){
+//            setCurrentPlayerId(1);
+//        }
+
+        //cycle through allFields
+        if (getCurrentPlayerId() < AMOUNT_OF_PLAYERS) {
+            setCurrentPlayerId( getCurrentPlayerId() + 1 ); //iterate through allPlayers from 1 to n.
+        } else {
+            setCurrentPlayerId(allPlayers.get(0).getId());  // from last element back to first one.
+        }
     }
 
 
@@ -45,5 +68,13 @@ public class RootPM {
 
     public void setCurrentPlayerId(int currentPlayerId) {
         this.currentPlayerId.set(currentPlayerId);
+    }
+
+    public ObservableList<BoardFieldPM> getAllFields() {
+        return allFields;
+    }
+
+    public ObservableList<PlayerPM> getAllPlayers() {
+        return allPlayers;
     }
 }
