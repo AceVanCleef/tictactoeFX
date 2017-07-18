@@ -1,7 +1,10 @@
 package tictactoe.view.components;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
+import tictactoe.presentationmodel.FieldState;
 import tictactoe.presentationmodel.RootPM;
 import tictactoe.view.util.ViewMixin;
 
@@ -14,6 +17,9 @@ public class BoardField extends StackPane implements ViewMixin {
 
     private SVGPath cross;
     private SVGPath circle;
+
+    //Todo: wie GUI BoardField mit BoardFieldPM verknüpfen? StateBdinging vs ID auch im GUI-Feld?
+    private final ObjectProperty<FieldState> state = new SimpleObjectProperty<>();
 
 
     public BoardField(RootPM pm){

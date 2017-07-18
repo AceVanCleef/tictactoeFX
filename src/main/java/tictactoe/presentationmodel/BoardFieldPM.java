@@ -51,6 +51,6 @@ public class BoardFieldPM {
 /**
  * holds all valid states a BoardGame field can have.
  */
-enum FieldState {
+public enum FieldState {
     EMPTY, TAKEN_BY_PLAYER01, TAKEN_BY_PLAYER02
 }

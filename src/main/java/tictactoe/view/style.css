@@ -12,6 +12,10 @@
     -fx-border-width: 2px;
     -fx-border-color: black;
 }
+.board-field:hover {
+    -fx-background-color: gray;
+    -fx-border-color: white;
+}
 
 #score-board-wrapper {
 }
