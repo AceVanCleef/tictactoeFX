@@ -1,6 +1,8 @@
 package tictactoe.presentationmodel;
 
 import javafx.beans.property.*;
+import tictactoe.presentationmodel.states.FieldState;
+import tictactoe.presentationmodel.states.fieldstateimpl.EmptyState;
 
 /**
  * Created by Degonas on 18.07.2017.
@@ -8,8 +10,11 @@ import javafx.beans.property.*;
 public class BoardFieldPM {
 
     private final IntegerProperty id = new SimpleIntegerProperty();
+
     /* the state of this BoardFieldPM (empty, taken by player 01 or player 02 */
     private final ObjectProperty<FieldState> state = new SimpleObjectProperty<>();
+
+    private final BooleanProperty disable = new SimpleBooleanProperty(false);
 
 
     /**
@@ -18,7 +23,7 @@ public class BoardFieldPM {
      */
     public BoardFieldPM(int id){
         setId(id);
-        setState(FieldState.EMPTY);
+        setState(new EmptyState());
     }
 
     public int getId() {
@@ -44,13 +49,17 @@ public class BoardFieldPM {
     public void setState(FieldState state) {
         this.state.set(state);
     }
+
+    public boolean isDisabled() {
+        return disable.get();
+    }
+
+    public BooleanProperty disableProperty() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable.set(disable);
+    }
 }
 
-/************************** States of BoardGame fields *********************************/
-
-/**
- * holds all valid states a BoardGame field can have.
- */
-public enum FieldState {
-    EMPTY, TAKEN_BY_PLAYER01, TAKEN_BY_PLAYER02
-}

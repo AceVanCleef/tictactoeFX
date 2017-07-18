@@ -4,6 +4,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.shape.SVGPath;
+import tictactoe.presentationmodel.states.FieldState;
+import tictactoe.presentationmodel.states.fieldstateimpl.TakenByPlayer01;
 
 /**
  * Created by degonas on 17.07.2017.
@@ -38,6 +41,19 @@ public class RootPM {
         setCurrentPlayerId(allPlayers.get(0).getId());
     }
 
+    public SVGPath claimFieldForCurrentPlayer(int fieldId) {
+        //disable currentField
+        BoardFieldPM currentField = findFieldBy(fieldId);
+        currentField.setDisable(true);
+
+        //set the state of currentField and...
+        FieldState state = FieldState.getStateByPlayerId( getCurrentPlayerId() );
+        currentField.setState(state);
+        //...return its SVGPath representation to the GUI.
+        return state.getStateSymbol();
+    }
+
+    //Todo: check whether all fields are taken -> game rules.
 
     public void nextPlayer(){
         //siple switch approach using magical numbers
@@ -55,6 +71,13 @@ public class RootPM {
         }
     }
 
+
+    public BoardFieldPM findFieldBy(int fieldId) {
+        return allFields.stream()
+                .filter(fieldPM -> fieldPM.getId() == fieldId)
+                .findFirst()
+                .get();
+    }
 
     /******************************* getters and setters *********************************/
 
@@ -77,4 +100,5 @@ public class RootPM {
     public ObservableList<PlayerPM> getAllPlayers() {
         return allPlayers;
     }
+
 }

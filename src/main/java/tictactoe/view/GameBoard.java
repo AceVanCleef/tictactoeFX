@@ -36,7 +36,8 @@ public class GameBoard extends GridPane implements ViewMixin {
     @Override
     public void initializeParts() {
         for (int i = 0; i < RootPM.AMOUNT_OF_FIELDS; ++i) {
-            allFields.add(new BoardField(pm));
+            int id = pm.getAllFields().get(i).getId();
+            allFields.add(new BoardField(pm, id));
         }
     }
 
