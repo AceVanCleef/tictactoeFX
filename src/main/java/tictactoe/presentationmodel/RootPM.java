@@ -14,8 +14,13 @@ public class RootPM {
 
     private ObservableList<BoardFieldPM> allFields = FXCollections.observableArrayList();
 
-    public RootPM(){
 
+
+    public RootPM(){
+        //prepare the GameBoard
+        for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
+            allFields.add(new BoardFieldPM(i));
+        }
     }
 
 }

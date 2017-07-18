@@ -21,7 +21,7 @@ public class GameBoard extends GridPane implements ViewMixin {
 
 
     /* holds all fields of this gameboard. */
-    private ObservableList<BoardField> allFields = FXCollections.observableArrayList();
+    private ObservableList<BoardField> allFields = FXCollections.observableArrayList(); //#Frage: Warum ObjectProperty statt StringProperty (Funktionsweise enum)?
 
     public GameBoard(RootPM pm){
         this.pm = pm;

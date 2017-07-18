@@ -12,6 +12,10 @@ public class BoardFieldPM {
     private final ObjectProperty<FieldState> state = new SimpleObjectProperty<>();
 
 
+    /**
+     * initializes a presentation of a GameBoard field with the default state "EMPTY".
+     * @param id of this field.
+     */
     public BoardFieldPM(int id){
         setId(id);
         setState(FieldState.EMPTY);
