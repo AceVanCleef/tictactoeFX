@@ -19,8 +19,6 @@ public class GameBoard extends GridPane implements ViewMixin {
 
     private final RootPM pm;
 
-    /* the maximum amount of fields this gameboard has. */
-    private static int AMOUNT_OF_FIELDS = 9;
 
     /* holds all fields of this gameboard. */
     private ObservableList<BoardField> allFields = FXCollections.observableArrayList();
@@ -37,7 +35,7 @@ public class GameBoard extends GridPane implements ViewMixin {
 
     @Override
     public void initializeParts() {
-        for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
+        for (int i = 0; i < RootPM.AMOUNT_OF_FIELDS; ++i) {
             allFields.add(new BoardField(pm));
         }
     }
@@ -61,7 +59,7 @@ public class GameBoard extends GridPane implements ViewMixin {
      * fill GameBoard with n x n fields. n = rowLength.
      */
     private void generateGameBoard(){
-        int i = 0, rowIndex = 0, rowLenght = (int) Math.sqrt(AMOUNT_OF_FIELDS);
+        int i = 0, rowIndex = 0, rowLenght = (int) Math.sqrt(RootPM.AMOUNT_OF_FIELDS);
         for(BoardField field : allFields){
             add(field, i % rowLenght, rowIndex);
             i++;
