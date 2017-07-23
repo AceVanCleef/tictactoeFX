@@ -85,7 +85,11 @@ public class Rules_2D_3x3 extends GameRules {
     protected boolean isDraw(ObservableList<BoardFieldPM> allFields){
         //Are all fields occupied by a player?
         return allFields.stream().noneMatch(boardFieldPM -> boardFieldPM.getState().getStatusCode() == FieldState.StatusCode.EMPTY);
+
+        //Todo: add more draw conditions.
+
     }
+
 
     /*********************** getters and setters ******************************/
     @Override

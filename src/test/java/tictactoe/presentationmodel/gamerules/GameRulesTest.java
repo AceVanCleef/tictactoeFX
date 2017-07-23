@@ -55,7 +55,7 @@ public class GameRulesTest {
         assertEquals(false, gameState.isWon());
         assertEquals(false, gameState.isDraw());
         assertEquals(true, gameState.doesGameContinue());
-
+        gameState.reset();
 
 
         //given
@@ -73,7 +73,7 @@ public class GameRulesTest {
         assertEquals(false, gameState.isWon());
         assertEquals(false, gameState.isDraw());
         assertEquals(true, gameState.doesGameContinue());
-
+        gameState.reset();
 
 
         //given
@@ -91,7 +91,7 @@ public class GameRulesTest {
         assertEquals(false, gameState.isWon());
         assertEquals(false, gameState.isDraw());
         assertEquals(true, gameState.doesGameContinue());
-
+        gameState.reset();
 
 
         //given
@@ -109,7 +109,7 @@ public class GameRulesTest {
         assertEquals(false, gameState.isWon());
         assertEquals(false, gameState.isDraw());
         assertEquals(true, gameState.doesGameContinue());
-
+        gameState.reset();
 
 
         //given
@@ -129,5 +129,111 @@ public class GameRulesTest {
         assertEquals(true, gameState.isWon());
         assertEquals(false, gameState.isDraw());
         assertEquals(false, gameState.doesGameContinue());
+        gameState.reset();
+
+
+
+        //given
+        /* [Horizontal win condition]
+               x|x|_
+               o|o|o
+               x|x|
+         */
+        allFields.get(3).setState(state2);
+        allFields.get(4).setState(state2);
+        allFields.get(5).setState(state2);
+
+        //when
+        rules.updateGameState(allFields);
+
+        //then
+        assertEquals(true, gameState.isWon());
+        assertEquals(false, gameState.isDraw());
+        assertEquals(false, gameState.doesGameContinue());
+        gameState.reset();
+
+
+
+
+        /* [Diagonal win condition version 01]
+               o|_|_
+               _|o|_
+                | |o
+         */
+        allFields.clear();
+        for (int i = 0; i < 9; ++i) {
+            allFields.add(new BoardFieldPM(i));
+        }
+        allFields.get(0).setState(state2);
+        allFields.get(4).setState(state2);
+        allFields.get(8).setState(state2);
+
+
+        //when
+        rules.updateGameState(allFields);
+
+        //then
+        assertEquals(true, gameState.isWon());
+        assertEquals(false, gameState.isDraw());
+        assertEquals(false, gameState.doesGameContinue());
+        gameState.reset();
+
+
+
+        /* [Diagonal win condition version 02]
+               _|_|x
+               _|x|_
+               x| |
+         */
+        allFields.clear();
+        for (int i = 0; i < 9; ++i) {
+            allFields.add(new BoardFieldPM(i));
+        }
+        allFields.get(2).setState(state1);
+        allFields.get(4).setState(state1);
+        allFields.get(6).setState(state1);
+
+
+        //when
+        rules.updateGameState(allFields);
+
+        //then
+        assertEquals(true, gameState.isWon());
+        assertEquals(false, gameState.isDraw());
+        assertEquals(false, gameState.doesGameContinue());
+        gameState.reset();
+
+
+        /* [Draw condition version 01: all fields are taken]
+               x|o|x
+               o|o|x
+               x|x|o
+         */
+        allFields.clear();
+        for (int i = 0; i < 9; ++i) {
+            allFields.add(new BoardFieldPM(i));
+        }
+        allFields.get(0).setState(state1);
+        allFields.get(1).setState(state2);
+        allFields.get(2).setState(state1);
+
+        allFields.get(3).setState(state2);
+        allFields.get(4).setState(state2);
+        allFields.get(5).setState(state1);
+
+        allFields.get(6).setState(state1);
+        allFields.get(7).setState(state1);
+        allFields.get(8).setState(state2);
+
+
+
+        //when
+        rules.updateGameState(allFields);
+
+        //then
+        assertEquals(false, gameState.isWon());
+        assertEquals(true, gameState.isDraw());
+        assertEquals(false, gameState.doesGameContinue());
+        gameState.reset();
     }
 }
