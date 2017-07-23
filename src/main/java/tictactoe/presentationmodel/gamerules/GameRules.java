@@ -31,7 +31,20 @@ public abstract class GameRules {
         return null;
     }
 
-    public abstract void updateGameState(ObservableList<BoardFieldPM> allFields);
+    public void updateGameState(ObservableList<BoardFieldPM> allFields){
+        GameStatePM currentState = getCurrentState();
+
+        // Respect the order: 1st win conditions, 2nd draw conditions
+        if( isWon(allFields) ){
+            currentState.setWon(true);
+        } else if( isDraw(allFields) ) {
+            currentState.setDraw(true);
+        }
+    }
+
+    protected abstract boolean isWon(ObservableList<BoardFieldPM> allFields);
+
+    protected abstract boolean isDraw(ObservableList<BoardFieldPM> allFields);
 
     /*********************** getters and setters ******************************/
     public GameStatePM getCurrentState() {

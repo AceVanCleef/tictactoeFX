@@ -17,6 +17,8 @@ public class RootPM {
 
     /* the maximum amount of fields this gameboard has. */
     public final static int AMOUNT_OF_FIELDS = 9;
+    //Todo: turn AMOUNT_OF_FIELDS into a part of the instance.
+    //Todo 2: when expanding to 2D and 3D models, refractor into Factory Pattern.
 
     private final ObservableList<BoardFieldPM> allFields = FXCollections.observableArrayList();
 
@@ -100,6 +102,7 @@ public class RootPM {
         } else if (Math.sqrt(AMOUNT_OF_FIELDS) == 5){
             return GameRules.getGameRulesFor(GameRules.RuleSet._2d_5x5, gameState);
         }
+        return null;    //Todo: does make this sense?
     }
 
     /******************************* getters and setters *********************************/

@@ -14,7 +14,7 @@ public class GameStatePM {
         setDraw(false);
     }
 
-    public boolean doesGameContinues(){
+    public boolean doesGameContinue(){
         //return isWon == false && isDraw == false;
         return !isWon() && !isDraw();
     }

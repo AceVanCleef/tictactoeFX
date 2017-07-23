@@ -10,7 +10,7 @@ import tictactoe.presentationmodel.states.fieldstateimpl.TakenByPlayer02;
  */
 public abstract class FieldState {
 
-    protected enum StatusCode {
+    public enum StatusCode {
         EMPTY, TAKEN_BY_PLAYER_01, TAKEN_BY_PLAYER_02
     }
 
