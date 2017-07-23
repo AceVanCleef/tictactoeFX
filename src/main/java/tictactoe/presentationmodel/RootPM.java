@@ -34,6 +34,9 @@ public class RootPM {
     /* represents the state of the currently running game round. Can be queried by using isWon(), isDraw() and isContinuing(). */
     private GameStatePM gameState;
 
+    /* counts how many draws have happened */
+    public final IntegerProperty drawCount = new SimpleIntegerProperty(0);
+
     public RootPM(){
         //prepare the GameBoard
         for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
@@ -60,13 +63,26 @@ public class RootPM {
         BoardFieldPM currentField = findFieldBy(fieldId);
         currentField.setDisable(true);
 
-        //set the state of currentField and...
+        //set the state of currentField...
         FieldState state = FieldState.getStateByPlayerId( getCurrentPlayerId() );
         currentField.setState(state);
         //...return its SVGPath representation to the GUI.
         return state.getStateSymbol();
     }
 
+    public void checkCurrentGameStatus(){
+        //TODO / XXX: check, if this makes sense.
+        //checks if game has been won or a draw concludes the game.
+        rules.updateGameState(allFields);
+
+        //check if current player has won
+        if ( gameState.isWon() ) {
+            PlayerPM currentPlayer = allPlayers.get(getCurrentPlayerId());
+            currentPlayer.setScore( currentPlayer.getScore() + 1 );
+        } else if ( gameState.isDraw() ) {
+            setDrawCount( getDrawCount() + 1);
+        }
+    }
 
     public void nextPlayer(){
         //siple switch approach using magical numbers
@@ -88,6 +104,13 @@ public class RootPM {
     public BoardFieldPM findFieldBy(int fieldId) {
         return allFields.stream()
                 .filter(fieldPM -> fieldPM.getId() == fieldId)
+                .findFirst()
+                .get();
+    }
+
+    public PlayerPM findPlayerBy(int playerId) {
+        return allPlayers.stream()
+                .filter(playerPM -> playerPM.getId() == playerId)
                 .findFirst()
                 .get();
     }
@@ -127,4 +150,16 @@ public class RootPM {
         return allPlayers;
     }
 
+
+    public int getDrawCount() {
+        return drawCount.get();
+    }
+
+    public IntegerProperty drawCountProperty() {
+        return drawCount;
+    }
+
+    public void setDrawCount(int drawCount) {
+        this.drawCount.set(drawCount);
+    }
 }

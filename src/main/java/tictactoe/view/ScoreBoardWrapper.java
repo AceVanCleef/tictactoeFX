@@ -16,6 +16,8 @@ public class ScoreBoardWrapper extends VBox implements ViewMixin {
 
     private Label title;
     private ScoreBoard scoreBoard;
+    private Label drawLabel;
+    private Label drawCount;
 
     public ScoreBoardWrapper(RootPM pm){
         this.pm = pm;
@@ -32,11 +34,18 @@ public class ScoreBoardWrapper extends VBox implements ViewMixin {
     public void initializeParts() {
         title = new Label("Score");
         scoreBoard = new ScoreBoard(pm);
-    }
+        drawLabel = new Label("Draws: ");
+        drawCount = new Label();
+;    }
 
     @Override
     public void layoutParts() {
-        getChildren().addAll(title, scoreBoard);
+        getChildren().addAll(title, scoreBoard, drawLabel, drawCount);
+    }
+
+    @Override
+    public void setupBindings() {
+        drawCount.textProperty().bind(pm.drawCountProperty().asString());
     }
 }
 
@@ -75,5 +84,11 @@ class ScoreBoard extends HBox implements ViewMixin{
         //gaps between children
         HBox.setHgrow(spacerLeft, Priority.ALWAYS);
         HBox.setHgrow(spacerRight, Priority.ALWAYS);
+    }
+
+    @Override
+    public void setupBindings() {
+        scorePlayer01.textProperty().bind(pm.findPlayerBy(1).scoreProperty().asString());
+        scorePlayer02.textProperty().bind(pm.findPlayerBy(2).scoreProperty().asString());
     }
 }
