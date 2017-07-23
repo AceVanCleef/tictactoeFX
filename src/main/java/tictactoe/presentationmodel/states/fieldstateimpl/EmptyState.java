@@ -9,8 +9,17 @@ import tictactoe.presentationmodel.states.FieldState;
 public class EmptyState extends FieldState{
 
 
+    public EmptyState() {
+        super(StatusCode.EMPTY);
+    }
+
     @Override
     public SVGPath getStateSymbol() {
         return null;
+    }
+
+    @Override
+    public StatusCode getStatusCode() {
+        return super.getStatusCode();
     }
 }

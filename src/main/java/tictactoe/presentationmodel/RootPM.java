@@ -5,8 +5,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.SVGPath;
+import tictactoe.presentationmodel.gamerules.GameRules;
+import tictactoe.presentationmodel.states.GameStatePM;
 import tictactoe.presentationmodel.states.FieldState;
-import tictactoe.presentationmodel.states.fieldstateimpl.TakenByPlayer01;
 
 /**
  * Created by degonas on 17.07.2017.
@@ -26,6 +27,11 @@ public class RootPM {
     private final ObservableList<PlayerPM> allPlayers = FXCollections.observableArrayList();
     private final IntegerProperty currentPlayerId = new SimpleIntegerProperty();
 
+    /* Game rules */
+    private GameRules rules;
+    /* represents the state of the currently running game round. Can be queried by using isWon(), isDraw() and isContinuing(). */
+    private GameStatePM gameState;
+
     public RootPM(){
         //prepare the GameBoard
         for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
@@ -39,6 +45,12 @@ public class RootPM {
 
         //this player begins the match
         setCurrentPlayerId(allPlayers.get(0).getId());
+
+        //GameStatePM
+        gameState = new GameStatePM();
+
+        //set the game rules
+        rules = defineGameRules();
     }
 
     public SVGPath claimFieldForCurrentPlayer(int fieldId) {
@@ -53,7 +65,6 @@ public class RootPM {
         return state.getStateSymbol();
     }
 
-    //Todo: check whether all fields are taken -> game rules.
 
     public void nextPlayer(){
         //siple switch approach using magical numbers
@@ -77,6 +88,18 @@ public class RootPM {
                 .filter(fieldPM -> fieldPM.getId() == fieldId)
                 .findFirst()
                 .get();
+    }
+
+    /************************************ Game Rules and State ******************************************/
+
+    private GameRules defineGameRules(){
+        if (Math.sqrt(AMOUNT_OF_FIELDS) == 3){
+            return GameRules.getGameRulesFor(GameRules.RuleSet._2D_3X3, gameState);
+        } else if (Math.sqrt(AMOUNT_OF_FIELDS) == 4){
+            return GameRules.getGameRulesFor(GameRules.RuleSet._2D_4X4, gameState);
+        } else if (Math.sqrt(AMOUNT_OF_FIELDS) == 5){
+            return GameRules.getGameRulesFor(GameRules.RuleSet._2d_5x5, gameState);
+        }
     }
 
     /******************************* getters and setters *********************************/
