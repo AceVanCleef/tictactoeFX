@@ -26,6 +26,9 @@ public class BoardFieldPM {
         setState(new EmptyState());
     }
 
+
+    /*********************** setters and getters *******************************/
+
     public int getId() {
         return id.get();
     }

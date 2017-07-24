@@ -6,12 +6,14 @@ import tictactoe.presentationmodel.gamerules.impl.Rules_2D_3x3;
 import tictactoe.presentationmodel.states.GameStatePM;
 
 /**
+ * offers GameRules for each type of RuleSet. Each RuleSet holds suitable win and draw conditions.
+ *
  * Created by Degonas on 23.07.2017.
  */
 public abstract class GameRules {
 
 
-
+    /* the type of game which players are currently playing */
     public enum RuleSet{
         _2D_3X3, _2D_4X4, _2d_5x5
     }
@@ -23,6 +25,7 @@ public abstract class GameRules {
         currentState = gameState;   //needed for "super(gamestate)" in subclass' constructor.
     }
 
+    //factory method
     public static GameRules getGameRulesFor(RuleSet gametype, GameStatePM gameState){
         if(gametype == RuleSet._2D_3X3) {
             return new Rules_2D_3x3(gameState);
@@ -31,6 +34,10 @@ public abstract class GameRules {
         return null;
     }
 
+    /**
+     * checks allFields against all possible win and draw conditions and updates GameStatePM currentState.
+     * @param allFields
+     */
     public void updateGameState(ObservableList<BoardFieldPM> allFields){
         GameStatePM currentState = getCurrentState();
 

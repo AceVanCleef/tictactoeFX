@@ -63,13 +63,13 @@ public class RootPM {
      * @param fieldId of currently selected / clicked field.
      * @return SVGPath of current player's icon / field marker.
      */
-    public SVGPath updateGame(int fieldId){
+    public SVGPath updateGameBy(int fieldId){
         //1) claim Field for current player
         //2) change state of current field
         SVGPath fieldMarker = claimFieldForCurrentPlayer(fieldId);
 
         //3) update current game state
-        rules.updateGameState(allFields);
+        rules.updateGameState(allFields);   //check win conditions
 
         //4) check if game cdntinues
         if ( gameState.doesGameContinue() ) {
@@ -87,7 +87,14 @@ public class RootPM {
         return fieldMarker;
     }
 
-    public SVGPath claimFieldForCurrentPlayer(int fieldId) {
+    /**
+     * disables the BoardFieldPM selected by the current player and marks it
+     * as taken by the current player.
+     * Note: selection triggered by EventHandler in BoardField view.
+     * @param fieldId of currentField
+     * @return SVGPath fieldMarker for the currentPlayer
+     */
+    private SVGPath claimFieldForCurrentPlayer(int fieldId) {
         //disable currentField
         BoardFieldPM currentField = findFieldBy(fieldId);
         currentField.setDisable(true);
@@ -99,6 +106,9 @@ public class RootPM {
         return state.getStateSymbol();
     }
 
+    /** increments either the score of the winning player or the drawCount according to
+     *  the current state of the game.
+     */
     private void updateScore(){
         //check if current player has won
         if ( gameState.isWon() ) {
@@ -119,7 +129,9 @@ public class RootPM {
         }
     }
 
-    public void nextPlayer(){
+    /** selects the next players.
+     */
+    private void nextPlayer(){
         //siple switch approach using magical numbers
 //        if ( getCurrentPlayerId() == 1){
 //            setCurrentPlayerId(2);

@@ -36,34 +36,41 @@ public class RootPMTest {
         assertEquals(pm.getAllPlayers().get(0).getId(), currentPlayerId);
     }
 
+
     @Test
-    public void testNextPlayer(){
-        /* from player01 to player02 */
-        //given
-        //pm = new RootPM(); //see setUp()
-        int previousPlayerId = pm.getCurrentPlayerId();
-
-        //when
-        pm.nextPlayer();
-
-        //then
-        int newCurrentPlayerId = pm.getCurrentPlayerId();
-        assertNotEquals(newCurrentPlayerId, previousPlayerId);
-        assertEquals(2, newCurrentPlayerId);
-        assertEquals(previousPlayerId + 1, newCurrentPlayerId);
-
-        /* from player02 to player01 */
-        //given
-        previousPlayerId = pm.getCurrentPlayerId();
-
-        //when
-        pm.nextPlayer();
-
-        //then
-        newCurrentPlayerId = pm.getCurrentPlayerId();
-        assertNotEquals(newCurrentPlayerId, previousPlayerId);
-        assertEquals(1, newCurrentPlayerId);
-        assertEquals(previousPlayerId - 1, newCurrentPlayerId);
-
+    public void testUpdateGameBy(){
+        //Todo: test .update() using mockito (stub testing)
+        fail();
     }
+
+//    @Test
+//    public void testNextPlayer(){
+//        /* from player01 to player02 */
+//        //given
+//        //pm = new RootPM(); //see setUp()
+//        int previousPlayerId = pm.getCurrentPlayerId();
+//
+//        //when
+//        pm.nextPlayer();
+//
+//        //then
+//        int newCurrentPlayerId = pm.getCurrentPlayerId();
+//        assertNotEquals(newCurrentPlayerId, previousPlayerId);
+//        assertEquals(2, newCurrentPlayerId);
+//        assertEquals(previousPlayerId + 1, newCurrentPlayerId);
+//
+//        /* from player02 to player01 */
+//        //given
+//        previousPlayerId = pm.getCurrentPlayerId();
+//
+//        //when
+//        pm.nextPlayer();
+//
+//        //then
+//        newCurrentPlayerId = pm.getCurrentPlayerId();
+//        assertNotEquals(newCurrentPlayerId, previousPlayerId);
+//        assertEquals(1, newCurrentPlayerId);
+//        assertEquals(previousPlayerId - 1, newCurrentPlayerId);
+//
+//    }
 }

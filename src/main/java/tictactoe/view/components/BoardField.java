@@ -13,14 +13,14 @@ public class BoardField extends StackPane implements ViewMixin {
 
     private final RootPM pm;
 
-    private int id;
+    private int fieldId;
     private SVGPath stateIcon;
 
 
 
-    public BoardField(RootPM pm, int id){
+    public BoardField(RootPM pm, int fieldId){
         this.pm = pm;
-        this.id = id;
+        this.fieldId = fieldId;
         init();
     }
 
@@ -44,7 +44,7 @@ public class BoardField extends StackPane implements ViewMixin {
     @Override
     public void addEventHandlers() {
         this.setOnMousePressed(event -> {
-            SVGPath desiredIconAsSVG = pm.updateGame(id);
+            SVGPath desiredIconAsSVG = pm.updateGameBy(fieldId);
             stateIcon.setContent(desiredIconAsSVG.getContent());
 
             System.out.println(pm.getCurrentPlayerId());    //Todo: remove
@@ -57,7 +57,7 @@ public class BoardField extends StackPane implements ViewMixin {
         stateIcon.scaleXProperty().bind(widthProperty().multiply(0.025));
         stateIcon.scaleYProperty().bind(heightProperty().multiply(0.025));
 
-        BoardFieldPM boardFieldPM = pm.findFieldBy(id);
+        BoardFieldPM boardFieldPM = pm.findFieldBy(fieldId);
         disableProperty().bind(boardFieldPM.disableProperty());
     }
 
