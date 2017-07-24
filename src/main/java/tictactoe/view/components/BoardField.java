@@ -44,21 +44,21 @@ public class BoardField extends StackPane implements ViewMixin {
     @Override
     public void addEventHandlers() {
         this.setOnMousePressed(event -> {
-            SVGPath desiredIconAsSVG = pm.claimFieldForCurrentPlayer(id);
+            SVGPath desiredIconAsSVG = pm.updateGame(id);
             stateIcon.setContent(desiredIconAsSVG.getContent());
-            pm.nextPlayer();
-            System.out.println(pm.getCurrentPlayerId());
+
+            System.out.println(pm.getCurrentPlayerId());    //Todo: remove
         });
     }
 
     @Override
     public void setupBindings() {
         //resizing of SVGPaths
-        stateIcon.scaleXProperty().bind(this.widthProperty().multiply(0.025));
-        stateIcon.scaleYProperty().bind(this.heightProperty().multiply(0.025));
+        stateIcon.scaleXProperty().bind(widthProperty().multiply(0.025));
+        stateIcon.scaleYProperty().bind(heightProperty().multiply(0.025));
 
-        BoardFieldPM coresponsivePM = pm.findFieldBy(id);
-        disableProperty().bind(coresponsivePM.disableProperty());
+        BoardFieldPM boardFieldPM = pm.findFieldBy(id);
+        disableProperty().bind(boardFieldPM.disableProperty());
     }
 
 

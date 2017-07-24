@@ -58,6 +58,35 @@ public class RootPM {
         rules = defineGameRules();
     }
 
+    /**
+     *
+     * @param fieldId of currently selected / clicked field.
+     * @return SVGPath of current player's icon / field marker.
+     */
+    public SVGPath updateGame(int fieldId){
+        //1) claim Field for current player
+        //2) change state of current field
+        SVGPath fieldMarker = claimFieldForCurrentPlayer(fieldId);
+
+        //3) update current game state
+        rules.updateGameState(allFields);
+
+        //4) check if game cdntinues
+        if ( gameState.doesGameContinue() ) {
+            //5a) switch to next player and mark the currentField with its FieldMarker
+            nextPlayer();
+
+            System.out.println("Game continues.");   //Todo: remove
+
+            return fieldMarker;
+        } else {
+            //5b) game has been won or it's a draw:
+            updateScore();
+            disableAllBoardFieldPMs();
+        }
+        return fieldMarker;
+    }
+
     public SVGPath claimFieldForCurrentPlayer(int fieldId) {
         //disable currentField
         BoardFieldPM currentField = findFieldBy(fieldId);
@@ -70,17 +99,23 @@ public class RootPM {
         return state.getStateSymbol();
     }
 
-    public void checkCurrentGameStatus(){
-        //TODO / XXX: check, if this makes sense.
-        //checks if game has been won or a draw concludes the game.
-        rules.updateGameState(allFields);
-
+    private void updateScore(){
         //check if current player has won
         if ( gameState.isWon() ) {
-            PlayerPM currentPlayer = allPlayers.get(getCurrentPlayerId());
+            PlayerPM currentPlayer = allPlayers.get(getCurrentPlayerId() - 1);
             currentPlayer.setScore( currentPlayer.getScore() + 1 );
+
+            System.out.println("Game has been won by "+ currentPlayer.getName() +".");   //Todo: remove
         } else if ( gameState.isDraw() ) {
             setDrawCount( getDrawCount() + 1);
+
+            System.out.println("It's a draw."); //Todo: remove
+        }
+    }
+
+    private void disableAllBoardFieldPMs(){
+        for (BoardFieldPM fieldPM : allFields) {
+            fieldPM.setDisable(true);
         }
     }
 
