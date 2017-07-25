@@ -16,7 +16,7 @@ public class RootPM {
 
 
     /* the maximum amount of fields this gameboard has. */
-    public final static int AMOUNT_OF_FIELDS = 9;
+    private int AMOUNT_OF_FIELDS;
     //Todo: turn AMOUNT_OF_FIELDS into a part of the instance.
     //Todo 2: when expanding to 2D and 3D models, refractor into Factory Pattern.
 
@@ -37,7 +37,9 @@ public class RootPM {
     /* counts how many draws have happened */
     public final IntegerProperty drawCount = new SimpleIntegerProperty(0);
 
-    public RootPM(){
+    public RootPM(int amountOfFields) {
+        setAmountOfFields(amountOfFields);
+
         //prepare the GameBoard
         for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
             allFields.add(new BoardFieldPM(i));
@@ -208,5 +210,28 @@ public class RootPM {
 
     public void setDrawCount(int drawCount) {
         this.drawCount.set(drawCount);
+    }
+
+
+    /**
+     * garantues a square GameBoard by transforming the square root of amountOfFields into
+     * the next lower natural Number n and stores n^2 as the value of AMOUNT_OF_FIELDS.
+     * @param amountOfFields
+     */
+    public void setAmountOfFields(int amountOfFields) {
+        if (amountOfFields < 9) {
+            this.AMOUNT_OF_FIELDS = 9;     //the smallest game board size is 3x3.
+            return; //shortcut.
+        }
+        //1) calculate potential length: E.g. 15^(1/2) = 3.87
+        double boardLength = Math.sqrt(amountOfFields);
+        //2) Transform length into natural number (e.g. 3.87 -> 3)
+        int n = (int) boardLength;
+        //3) ..and calculate the desired amount of fields: e.g. 3^2 = 9.
+        this.AMOUNT_OF_FIELDS = (int) Math.pow(n, 2);
+    }
+
+    public int getAmountOfFields(){
+        return AMOUNT_OF_FIELDS;
     }
 }

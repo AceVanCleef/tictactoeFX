@@ -14,7 +14,7 @@ public class AppStarter extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        RootPM pm = new RootPM();       //RootPM
+        RootPM pm = new RootPM(9);       //RootPM
 
         Parent rootPanel = new RootPane(pm);
 
