@@ -24,7 +24,7 @@ public class RootPM {
 
 
     /* the maximum amount of players this game has. */
-    public final static int AMOUNT_OF_PLAYERS = 2;
+    private int AMOUNT_OF_PLAYERS = 2;
 
     private final ObservableList<PlayerPM> allPlayers = FXCollections.observableArrayList();
     private final IntegerProperty currentPlayerId = new SimpleIntegerProperty();
@@ -37,8 +37,9 @@ public class RootPM {
     /* counts how many draws have happened */
     public final IntegerProperty drawCount = new SimpleIntegerProperty(0);
 
-    public RootPM(int amountOfFields) {
+    public RootPM(int amountOfFields, int amountOfPlayers) {
         setAmountOfFields(amountOfFields);
+        setAmountOfPlayers(amountOfPlayers);
 
         //prepare the GameBoard
         for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
@@ -46,7 +47,7 @@ public class RootPM {
         }
 
         //prepare playerPMs
-        for (int i = 0; i < AMOUNT_OF_PLAYERS; ++i) {
+        for (int i = 0; i < getAmountOfPlayers(); ++i) {
             allPlayers.add(new PlayerPM(i + 1));    //no mather how many players, their IDs must be in numerical sequence.
         }
 
@@ -141,8 +142,8 @@ public class RootPM {
 //            setCurrentPlayerId(1);
 //        }
 
-        //cycle through allFields
-        if (getCurrentPlayerId() < AMOUNT_OF_PLAYERS) {
+        //cycle through allPlayers
+        if (getCurrentPlayerId() < getAmountOfPlayers()) {
             setCurrentPlayerId( getCurrentPlayerId() + 1 ); //iterate through allPlayers from 1 to n.
         } else {
             setCurrentPlayerId(allPlayers.get(0).getId());  // from last element back to first one.
@@ -235,5 +236,23 @@ public class RootPM {
 
     public int getAmountOfFields(){
         return AMOUNT_OF_FIELDS;
+    }
+
+    public void setAmountOfPlayers(int amountOfPlayers) {
+        //minimal amount of players
+        if (amountOfPlayers < 2) {
+            AMOUNT_OF_PLAYERS = 2;
+            return;
+        }
+        //maximal amount of players
+        if (amountOfPlayers > 4) {
+            AMOUNT_OF_PLAYERS = 4;
+            return;
+        }
+        AMOUNT_OF_PLAYERS = amountOfPlayers;
+    }
+
+    public int getAmountOfPlayers(){
+        return AMOUNT_OF_PLAYERS;
     }
 }
