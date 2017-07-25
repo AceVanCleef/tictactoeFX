@@ -214,7 +214,9 @@ public class RootPM {
 
 
     /**
-     * garantues a square GameBoard by transforming the square root of amountOfFields into
+     * garantues...
+     * - a GameBoard with minimal size of 3x3.
+     * - a square GameBoard by transforming the square root of amountOfFields into
      * the next lower natural Number n and stores n^2 as the value of AMOUNT_OF_FIELDS.
      * @param amountOfFields
      */
