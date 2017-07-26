@@ -1,6 +1,8 @@
 package tictactoe.presentationmodel;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +19,18 @@ public class RootPM {
 
     /* the maximum amount of fields this gameboard has. */
     private int AMOUNT_OF_FIELDS;
-    //Todo: turn AMOUNT_OF_FIELDS into a part of the instance.
     //Todo 2: when expanding to 2D and 3D models, refractor into Factory Pattern.
+    /* #NewGame: @GUI: amountOfFieldsTF */
+    private final IntegerProperty newAmountOfFields = new SimpleIntegerProperty();
+
 
     private final ObservableList<BoardFieldPM> allFields = FXCollections.observableArrayList();
 
 
     /* the maximum amount of players this game has. */
-    private int AMOUNT_OF_PLAYERS = 2;
+    private int AMOUNT_OF_PLAYERS;
+    /* #NewGame: @GUI: amountOfPlayersTF */
+    private final IntegerProperty newAmountOfPlayers = new SimpleIntegerProperty();
 
     private final ObservableList<PlayerPM> allPlayers = FXCollections.observableArrayList();
     private final IntegerProperty currentPlayerId = new SimpleIntegerProperty();
@@ -35,7 +41,15 @@ public class RootPM {
     private GameStatePM gameState;
 
     /* counts how many draws have happened */
-    public final IntegerProperty drawCount = new SimpleIntegerProperty(0);
+    private final IntegerProperty drawCount = new SimpleIntegerProperty(0);
+
+
+    /* triggers the generation of a new GameBoard view */
+    private final BooleanProperty refreshBoardView = new SimpleBooleanProperty(false);
+
+
+    /************************************ Constructor(s) ******************************************/
+
 
     public RootPM(int amountOfFields, int amountOfPlayers) {
         setAmountOfFields(amountOfFields);
@@ -178,6 +192,45 @@ public class RootPM {
         return null;    //Todo: does make this sense?
     }
 
+    /******************************* creating new game round *********************************/
+
+    /**
+     * #NewGame
+     * @param amountOfFields
+     * @param amountOfPlayers
+     */
+    public void newGame(int amountOfFields, int amountOfPlayers) {
+        setAmountOfFields(amountOfFields);
+        setAmountOfPlayers(amountOfPlayers);
+
+        //reset collections
+        allFields.clear();
+        allPlayers.clear();
+
+        //prepare the GameBoard
+        for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
+            allFields.add(new BoardFieldPM(i));
+        }
+
+        //prepare playerPMs
+        for (int i = 0; i < getAmountOfPlayers(); ++i) {
+            allPlayers.add(new PlayerPM(i + 1));    //no mather how many players, their IDs must be in numerical sequence.
+        }
+
+        //this player begins the match
+        setCurrentPlayerId(allPlayers.get(0).getId());
+
+        //GameStatePM
+        gameState = new GameStatePM();
+
+        //set the game rules
+        rules = defineGameRules();
+
+        //trigger GUI refresh (Note: GameBoard.java will also reset this flag)
+        setRefreshBoardView(true);
+    }
+
+
     /******************************* getters and setters *********************************/
 
     public int getCurrentPlayerId() {
@@ -213,6 +266,17 @@ public class RootPM {
         this.drawCount.set(drawCount);
     }
 
+    public boolean isRefreshBoardView() {
+        return refreshBoardView.get();
+    }
+
+    public BooleanProperty refreshBoardViewProperty() {
+        return refreshBoardView;
+    }
+
+    public void setRefreshBoardView(boolean refreshBoardView) {
+        this.refreshBoardView.set(refreshBoardView);
+    }
 
     /**
      * garantues...
@@ -231,7 +295,11 @@ public class RootPM {
         //2) Transform length into natural number (e.g. 3.87 -> 3)
         int n = (int) boardLength;
         //3) ..and calculate the desired amount of fields: e.g. 3^2 = 9.
-        this.AMOUNT_OF_FIELDS = (int) Math.pow(n, 2);
+        int desiredFieldCount = (int) Math.pow(n, 2);
+
+        //set values
+        setNewAmountOfFields( desiredFieldCount );
+        this.AMOUNT_OF_FIELDS = desiredFieldCount;
     }
 
     public int getAmountOfFields(){
@@ -242,17 +310,44 @@ public class RootPM {
         //minimal amount of players
         if (amountOfPlayers < 2) {
             AMOUNT_OF_PLAYERS = 2;
+            setNewAmountOfPlayers(2);
             return;
         }
         //maximal amount of players
         if (amountOfPlayers > 4) {
             AMOUNT_OF_PLAYERS = 4;
+            setNewAmountOfPlayers(4);
             return;
         }
+        setNewAmountOfPlayers(amountOfPlayers);
         AMOUNT_OF_PLAYERS = amountOfPlayers;
     }
 
     public int getAmountOfPlayers(){
         return AMOUNT_OF_PLAYERS;
+    }
+
+    public int getNewAmountOfFields() {
+        return newAmountOfFields.get();
+    }
+
+    public IntegerProperty newAmountOfFieldsProperty() {
+        return newAmountOfFields;
+    }
+
+    public void setNewAmountOfFields(int newAmountOfFields) {
+        this.newAmountOfFields.set(newAmountOfFields);
+    }
+
+    public int getNewAmountOfPlayers() {
+        return newAmountOfPlayers.get();
+    }
+
+    public IntegerProperty newAmountOfPlayersProperty() {
+        return newAmountOfPlayers;
+    }
+
+    public void setNewAmountOfPlayers(int newAmountOfPlayers) {
+        this.newAmountOfPlayers.set(newAmountOfPlayers);
     }
 }

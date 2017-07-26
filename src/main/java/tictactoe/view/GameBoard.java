@@ -21,7 +21,7 @@ public class GameBoard extends GridPane implements ViewMixin {
 
 
     /* holds all fields of this gameboard. */
-    private ObservableList<BoardField> allFields = FXCollections.observableArrayList(); //#Frage: Warum ObjectProperty statt StringProperty (Funktionsweise enum)?
+    private ObservableList<BoardField> allFieldsAsView = FXCollections.observableArrayList(); //#Frage: Warum ObjectProperty statt StringProperty (Funktionsweise enum)?
 
     public GameBoard(RootPM pm){
         this.pm = pm;
@@ -37,7 +37,7 @@ public class GameBoard extends GridPane implements ViewMixin {
     public void initializeParts() {
         for (int i = 0; i < pm.getAmountOfFields(); ++i) {
             int id = pm.getAllFields().get(i).getId();
-            allFields.add(new BoardField(pm, id));
+            allFieldsAsView.add(new BoardField(pm, id));
         }
     }
 
@@ -56,17 +56,34 @@ public class GameBoard extends GridPane implements ViewMixin {
         getColumnConstraints().addAll(cc, cc, cc);
     }
 
+    @Override
+    public void addValueChangedListeners() {
+        pm.refreshBoardViewProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue){
+                refreshBoardView();
+                //set refresh flag back to false:
+                pm.setRefreshBoardView(false);
+            }
+        });
+    }
+
     /**
      * fill GameBoard with n x n fields. n = rowLength.
      */
     private void generateGameBoard(){
         int i = 0, rowIndex = 0, rowLenght = (int) Math.sqrt(pm.getAmountOfFields());
-        for(BoardField field : allFields){
+        for(BoardField field : allFieldsAsView){
             add(field, i % rowLenght, rowIndex);
             i++;
             if (i % rowLenght == 0){    //new line
                 rowIndex++;
             }
         }
+    }
+
+    private void refreshBoardView(){
+        getChildren().clear();
+        allFieldsAsView.clear();
+        init();
     }
 }

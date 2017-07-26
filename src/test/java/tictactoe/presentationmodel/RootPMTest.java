@@ -12,19 +12,19 @@ public class RootPMTest {
 
     @Before
     public void setUp(){
-        pm = new RootPM();
+        pm = new RootPM(9, 2);
     }
 
     @Test
     public void testSetUp(){
         //given
-        //pm = new RootPM(); //see setUp()
+        //pm = new RootPM(9, 2);; //see setUp()
 
         //when
 
         //then
-        assertEquals(pm.AMOUNT_OF_FIELDS, pm.getAllFields().size());
-        assertEquals(pm.AMOUNT_OF_PLAYERS, pm.getAllPlayers().size());
+        assertEquals(pm.getAmountOfFields(), pm.getAllFields().size());
+        assertEquals(pm.getAmountOfPlayers(), pm.getAllPlayers().size());
 
         //given
 
@@ -36,6 +36,28 @@ public class RootPMTest {
         assertEquals(pm.getAllPlayers().get(0).getId(), currentPlayerId);
     }
 
+    @Test
+    public void testNewGame(){
+        /* original Amount of fields = 9 and original amount of players = 2 */
+        //given
+        //pm = new RootPM(9, 2);; //original game board [see setUp()]
+
+        //when
+        pm.newGame(16, 3);
+
+        //then
+        assertEquals(pm.getAmountOfFields(), pm.getAllFields().size());
+        assertEquals(pm.getAmountOfPlayers(), pm.getAllPlayers().size());
+
+        //given
+
+        //when
+        /* the initial player's ID */
+        int currentPlayerId = pm.getCurrentPlayerId();
+
+        //then
+        assertEquals(pm.getAllPlayers().get(0).getId(), currentPlayerId);
+    }
 
     @Test
     public void testUpdateGameBy(){
