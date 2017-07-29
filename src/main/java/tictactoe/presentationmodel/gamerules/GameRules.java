@@ -3,6 +3,7 @@ package tictactoe.presentationmodel.gamerules;
 import javafx.collections.ObservableList;
 import tictactoe.presentationmodel.BoardFieldPM;
 import tictactoe.presentationmodel.gamerules.impl.Rules_2D_3x3;
+import tictactoe.presentationmodel.gamerules.impl.Rules_2D_4x4;
 import tictactoe.presentationmodel.states.GameStatePM;
 
 /**
@@ -29,6 +30,8 @@ public abstract class GameRules {
     public static GameRules getGameRulesFor(RuleSet gametype, GameStatePM gameState){
         if(gametype == RuleSet._2D_3X3) {
             return new Rules_2D_3x3(gameState);
+        } else if(gametype == RuleSet._2D_4X4) {
+            return new Rules_2D_4x4(gameState);
         }
 
         return null;

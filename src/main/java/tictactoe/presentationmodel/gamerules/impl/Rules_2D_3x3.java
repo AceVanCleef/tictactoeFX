@@ -11,6 +11,15 @@ import tictactoe.presentationmodel.states.GameStatePM;
  */
 public class Rules_2D_3x3 extends GameRules {
 
+    /*
+        GameBoard indexes:
+            00|01|02
+            --------
+            03|04|05
+            --------
+            06|07|08
+        * */
+
     public Rules_2D_3x3(GameStatePM gameState) {
         super(gameState);
     }
