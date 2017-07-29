@@ -45,13 +45,19 @@ public class Rules_2D_3x3 extends GameRules {
     }
 
     private boolean isWonVertically(ObservableList<BoardFieldPM> allFields){
+//        for (int i = 0; i < 3; ++i) {
+//            BoardFieldPM a = allFields.get(i);
+//            BoardFieldPM b = allFields.get(i + 3);
+//            BoardFieldPM c = allFields.get(i + 6);
+//            if (a.getState().getStatusCode() == b.getState().getStatusCode() &&         //A == B == C and...
+//                    b.getState().getStatusCode() == c.getState().getStatusCode() &&
+//                    b.getState().getStatusCode() != FieldState.StatusCode.EMPTY) {      //aren't EMPTY
+//                return true;
+//            }
+//        }
+
         for (int i = 0; i < 3; ++i) {
-            BoardFieldPM a = allFields.get(i);
-            BoardFieldPM b = allFields.get(i + 3);
-            BoardFieldPM c = allFields.get(i + 6);
-            if (a.getState().getStatusCode() == b.getState().getStatusCode() &&         //A == B == C and...
-                    b.getState().getStatusCode() == c.getState().getStatusCode() &&
-                    b.getState().getStatusCode() != FieldState.StatusCode.EMPTY) {      //aren't EMPTY
+            if ( compareFields(allFields, i,i + 3, i + 6) ){
                 return true;
             }
         }
@@ -59,30 +65,61 @@ public class Rules_2D_3x3 extends GameRules {
     }
 
     private boolean isWonHorizontally(ObservableList<BoardFieldPM> allFields) {
+//        for (int i = 0; i < allFields.size(); i = i + 3) {
+//            BoardFieldPM a = allFields.get(i);
+//            BoardFieldPM b = allFields.get(i + 1);
+//            BoardFieldPM c = allFields.get(i + 2);
+//            if (a.getState().getStatusCode() == b.getState().getStatusCode() &&         //A == B == C and...
+//                    b.getState().getStatusCode() == c.getState().getStatusCode() &&
+//                    b.getState().getStatusCode() != FieldState.StatusCode.EMPTY) {      //aren't EMPTY
+//                return true;
+//            }
+//        }
+
         for (int i = 0; i < allFields.size(); i = i + 3) {
-            BoardFieldPM a = allFields.get(i);
-            BoardFieldPM b = allFields.get(i + 1);
-            BoardFieldPM c = allFields.get(i + 2);
-            if (a.getState().getStatusCode() == b.getState().getStatusCode() &&         //A == B == C and...
-                    b.getState().getStatusCode() == c.getState().getStatusCode() &&
-                    b.getState().getStatusCode() != FieldState.StatusCode.EMPTY) {      //aren't EMPTY
+            if ( compareFields(allFields, i, i + 1, i + 2) ){
                 return true;
             }
         }
-        return false;
+
+            return false;
     }
 
     private boolean isWonDiagonally(ObservableList<BoardFieldPM> allFields) {
-        if (allFields.get(0).getState().getStatusCode() == allFields.get(4).getState().getStatusCode() &&           //A == B == C and...
-                allFields.get(4).getState().getStatusCode() == allFields.get(8).getState().getStatusCode() &&
-                allFields.get(4).getState().getStatusCode() != FieldState.StatusCode.EMPTY) {                       //aren't EMPTY
+//        if (allFields.get(0).getState().getStatusCode() == allFields.get(4).getState().getStatusCode() &&           //A == B == C and...
+//                allFields.get(4).getState().getStatusCode() == allFields.get(8).getState().getStatusCode() &&
+//                allFields.get(4).getState().getStatusCode() != FieldState.StatusCode.EMPTY) {                       //aren't EMPTY
+//            return true;
+//        } else if (allFields.get(2).getState().getStatusCode() == allFields.get(4).getState().getStatusCode() &&    //A == B == C and...
+//                allFields.get(4).getState().getStatusCode() == allFields.get(6).getState().getStatusCode() &&
+//                allFields.get(4).getState().getStatusCode() != FieldState.StatusCode.EMPTY) {                       //aren't EMPTY
+//            return true;
+//        }
+
+        if ( compareFields(allFields,0,4,8) ){
             return true;
-        } else if (allFields.get(2).getState().getStatusCode() == allFields.get(4).getState().getStatusCode() &&    //A == B == C and...
-                allFields.get(4).getState().getStatusCode() == allFields.get(6).getState().getStatusCode() &&
-                allFields.get(4).getState().getStatusCode() != FieldState.StatusCode.EMPTY) {                       //aren't EMPTY
+        } else if ( compareFields(allFields, 2,4,6) ){
             return true;
         }
+
         return false;
+    }
+
+    /********************************** Helper Methods *****************************************/
+
+
+    /**
+     * checks whether all four fields (indexes i, j, k and m) are taken by the same player.
+     * @param allFields represents the whole GameBoard (or rather all Fields of GameBoard)
+     * @param i index of 1st BoardFieldPM
+     * @param j index of 2nd BoardFieldPM
+     * @param k index of 3rd BoardFieldPM
+     * @return boolean - have same FieldState.StatusCode or not.
+     */
+    private boolean compareFields(ObservableList<BoardFieldPM> allFields, int i, int j, int k){
+        return allFields.get(i).getState().getStatusCode() == allFields.get(j).getState().getStatusCode() &&           //A == B == C and...
+                allFields.get(j).getState().getStatusCode() == allFields.get(k).getState().getStatusCode() &&
+                allFields.get(j).getState().getStatusCode() != FieldState.StatusCode.EMPTY;                            //aren't EMPTY
     }
 
 

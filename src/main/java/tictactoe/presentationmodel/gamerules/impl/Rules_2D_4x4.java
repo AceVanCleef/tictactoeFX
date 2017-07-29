@@ -48,34 +48,36 @@ public class Rules_2D_4x4 extends GameRules {
     }
 
     private boolean isWonVertically(ObservableList<BoardFieldPM> allFields){
+        /* Indexes:
+            00|__|__|__
+            04|__|__|__
+            08|__|__|__
+            12|  |  |
+            Move to right: +1
+         */
         for (int i = 0; i < 4; ++i) {
-            BoardFieldPM a = allFields.get(i);
-            BoardFieldPM b = allFields.get(i + 4);
-            BoardFieldPM c = allFields.get(i + 8);
-            BoardFieldPM d = allFields.get(i + 12);
-            if (a.getState().getStatusCode() == b.getState().getStatusCode() &&         //A == B == C == D and...
-                    b.getState().getStatusCode() == c.getState().getStatusCode() &&
-                    c.getState().getStatusCode() == d.getState().getStatusCode() &&
-                    b.getState().getStatusCode() != FieldState.StatusCode.EMPTY) {      //aren't EMPTY
+            if (compareFields(allFields, i, i + 4, i + 8, i + 12)){
                 return true;
             }
         }
+
         return false;
     }
 
     private boolean isWonHorizontally(ObservableList<BoardFieldPM> allFields) {
+        /* Indexes:
+            00|01|02|03
+            __|__|__|__
+            __|__|__|__
+              |  |  |
+            Move one row down: +4
+         */
         for (int i = 0; i < allFields.size(); i = i + 4) {
-            BoardFieldPM a = allFields.get(i);
-            BoardFieldPM b = allFields.get(i + 1);
-            BoardFieldPM c = allFields.get(i + 2);
-            BoardFieldPM d = allFields.get(i + 3);
-            if (a.getState().getStatusCode() == b.getState().getStatusCode() &&         //A == B == C == D and...
-                    b.getState().getStatusCode() == c.getState().getStatusCode() &&
-                    c.getState().getStatusCode() == d.getState().getStatusCode() &&
-                    b.getState().getStatusCode() != FieldState.StatusCode.EMPTY) {      //aren't EMPTY
+            if ( compareFields(allFields, i, i + 1, i + 2, i + 3) ){
                 return true;
             }
         }
+
         return false;
     }
 
@@ -90,17 +92,12 @@ public class Rules_2D_4x4 extends GameRules {
             -----------
             12|13|14|15
         * */
-        if (allFields.get(0).getState().getStatusCode() == allFields.get(5).getState().getStatusCode() &&           //A == B == C == D and...
-                allFields.get(5).getState().getStatusCode() == allFields.get(10).getState().getStatusCode() &&
-                allFields.get(10).getState().getStatusCode() == allFields.get(15).getState().getStatusCode() &&
-                allFields.get(5).getState().getStatusCode() != FieldState.StatusCode.EMPTY) {                       //aren't EMPTY
+        if ( compareFields(allFields, 0, 5, 10, 15) ){
             return true;
-        } else if (allFields.get(3).getState().getStatusCode() == allFields.get(6).getState().getStatusCode() &&    //A == B == C == D and...
-                allFields.get(6).getState().getStatusCode() == allFields.get(9).getState().getStatusCode() &&
-                allFields.get(9).getState().getStatusCode() == allFields.get(12).getState().getStatusCode() &&
-                allFields.get(6).getState().getStatusCode() != FieldState.StatusCode.EMPTY) {                       //aren't EMPTY
+        } else if ( compareFields(allFields, 3, 6, 9, 12) ){
             return true;
         }
+
         return false;
     }
 
@@ -124,6 +121,19 @@ public class Rules_2D_4x4 extends GameRules {
         return false;
     }
 
+
+    /********************************** Helper Methods *****************************************/
+
+
+    /**
+     * checks whether all four fields (indexes i, j, k and m) are taken by the same player.
+     * @param allFields represents the whole GameBoard (or rather all Fields of GameBoard)
+     * @param i index of 1st BoardFieldPM
+     * @param j index of 2nd BoardFieldPM
+     * @param k index of 3rd BoardFieldPM
+     * @param m index of 4th BoardFieldPM
+     * @return boolean - have same FieldState.StatusCode or not.
+     */
     private boolean compareFields(ObservableList<BoardFieldPM> allFields, int i, int j, int k, int m){
         return allFields.get(i).getState().getStatusCode() == allFields.get(j).getState().getStatusCode() &&           //A == B == C == D and...
                 allFields.get(j).getState().getStatusCode() == allFields.get(k).getState().getStatusCode() &&
