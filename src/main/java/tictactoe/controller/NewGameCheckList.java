@@ -4,7 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import tictactoe.presentationmodel.RootPM;
 
-/** #NewGame: sets RootPM's setUpNewGame Property back to false only if all GUI elements have been updated.
+/** #NewGame: knows when all views have been updated when RootPM's newGame() has been invoked and if so, informs RootPM (setSetUpNewGame(false).
  *
  * Usage:
  * - create instance of NewGameCheckList within RootPM.
@@ -25,6 +25,7 @@ public class NewGameCheckList {
 
     private RootPM pm;
 
+// Potential idea for when more GUI components would be added
 //    /* signals that the new game has been set up */
 //    private final BooleanProperty setUpProcessFinished = new SimpleBooleanProperty(false);
 //
