@@ -7,9 +7,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.SVGPath;
+import tictactoe.controller.NewGameCheckList;
 import tictactoe.presentationmodel.gamerules.GameRules;
 import tictactoe.presentationmodel.states.GameStatePM;
 import tictactoe.presentationmodel.states.FieldState;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by degonas on 17.07.2017.
@@ -44,8 +48,10 @@ public class RootPM {
     private final IntegerProperty drawCount = new SimpleIntegerProperty(0);
 
 
-    /* triggers the generation of a new GameBoard view */
-    private final BooleanProperty refreshBoardView = new SimpleBooleanProperty(false);
+    /*#NewGame: triggers the generation of a new GameBoard view and other GUI components */
+    private final BooleanProperty setUpNewGame = new SimpleBooleanProperty(false);
+    /*#NewGame: only resets setUpNewGame if all GUI components were refreshed/updated */
+    private NewGameCheckList newGameCheckList;
 
 
     /************************************ Constructor(s) ******************************************/
@@ -73,6 +79,9 @@ public class RootPM {
 
         //set the game rules
         rules = defineGameRules();
+
+        //instantiate NewGameCheckList
+        newGameCheckList = new NewGameCheckList(this);
     }
 
     /**
@@ -227,9 +236,22 @@ public class RootPM {
         rules = defineGameRules();
 
         //trigger GUI refresh (Note: GameBoard.java will also reset this flag)
-        setRefreshBoardView(true);
+        setSetUpNewGame(true);
     }
 
+    /********** to divide players into two groups for GUI (BorderPane.setLeft() vs. BorderPane.setRight() ) ****************/
+
+    public List<PlayerPM> getPlayerPMsWithEvenID(){
+        return allPlayers.stream()
+                .filter(playerPM -> playerPM.getId() % 2 == 0)
+                .collect(Collectors.toList());
+    }
+
+    public List<PlayerPM> getPlayerPMsWithOddID(){
+        return allPlayers.stream()
+                .filter(playerPM -> playerPM.getId() % 2 == 1)
+                .collect(Collectors.toList());
+    }
 
     /******************************* getters and setters *********************************/
 
@@ -266,20 +288,20 @@ public class RootPM {
         this.drawCount.set(drawCount);
     }
 
-    public boolean isRefreshBoardView() {
-        return refreshBoardView.get();
+    public boolean getSetUpNewGame() {
+        return setUpNewGame.get();
     }
 
-    public BooleanProperty refreshBoardViewProperty() {
-        return refreshBoardView;
+    public BooleanProperty setUpNewGameProperty() {
+        return setUpNewGame;
     }
 
-    public void setRefreshBoardView(boolean refreshBoardView) {
-        this.refreshBoardView.set(refreshBoardView);
+    public void setSetUpNewGame(boolean setUpNewGame) {
+        this.setUpNewGame.set(setUpNewGame);
     }
 
     /**
-     * garantues...
+     * guarantees...
      * - a GameBoard with minimal size of 3x3.
      * - a square GameBoard by transforming the square root of amountOfFields into
      * the next lower natural Number n and stores n^2 as the value of AMOUNT_OF_FIELDS.
@@ -349,5 +371,14 @@ public class RootPM {
 
     public void setNewAmountOfPlayers(int newAmountOfPlayers) {
         this.newAmountOfPlayers.set(newAmountOfPlayers);
+    }
+
+    /**
+     * Note: In view components, use 'pm.getNewGameCheckList()" and register them by setting up bindings with the individual
+     *      boolean properties of newGameCheckList class.
+     * @return
+     */
+    public NewGameCheckList getNewGameCheckList() {
+        return newGameCheckList;
     }
 }

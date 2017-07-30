@@ -1,8 +1,9 @@
-package tictactoe.view;
+package tictactoe.view.simplecontrols;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import tictactoe.presentationmodel.PlayerPM;
 import tictactoe.presentationmodel.RootPM;
 import tictactoe.view.util.ViewMixin;
 
@@ -12,21 +13,21 @@ import tictactoe.view.util.ViewMixin;
 public class PlayerOverview extends VBox implements ViewMixin {
 
     private final RootPM pm;
-    private final String initialName;
+    private final PlayerPM playerPM;
 
     private Label playerName;
     private Button surrender;
 
-    public PlayerOverview(RootPM pm, String playerName){
+    public PlayerOverview(RootPM pm, PlayerPM playerPM){
         this.pm = pm;
-        initialName = playerName;
+        this.playerPM = playerPM;
 
         init();
     }
 
     @Override
     public void initializeParts() {
-        playerName = new Label(initialName);
+        playerName = new Label(playerPM.getName());
         surrender = new Button("Surrender"); //Aufgeben
     }
 

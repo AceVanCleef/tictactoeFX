@@ -1,5 +1,7 @@
 package tictactoe.view;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.ColumnConstraints;
@@ -22,6 +24,9 @@ public class GameBoard extends GridPane implements ViewMixin {
 
     /* holds all fields of this gameboard. */
     private ObservableList<BoardField> allFieldsAsView = FXCollections.observableArrayList(); //#Frage: Warum ObjectProperty statt StringProperty (Funktionsweise enum)?
+
+    /*#NewGame: is this view updated? */
+    private final BooleanProperty isUpdated = new SimpleBooleanProperty(false);
 
     public GameBoard(RootPM pm){
         this.pm = pm;
@@ -58,13 +63,21 @@ public class GameBoard extends GridPane implements ViewMixin {
 
     @Override
     public void addValueChangedListeners() {
-        pm.refreshBoardViewProperty().addListener((observable, oldValue, newValue) -> {
+        //#NewGAme
+        pm.setUpNewGameProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue){
                 refreshBoardView();
                 //set refresh flag back to false:
-                pm.setRefreshBoardView(false);
+                //pm.setSetUpNewGame(false);
+                setIsUpdated(true);
             }
         });
+    }
+
+    @Override
+    public void setupBindings() {
+        //#NewGame: connection to NewGameCheckList
+        isUpdatedProperty().bindBidirectional(pm.getNewGameCheckList().isGameBoardRefreshedProperty());
     }
 
     /**
@@ -81,9 +94,24 @@ public class GameBoard extends GridPane implements ViewMixin {
         }
     }
 
+    //#NewGAme
     private void refreshBoardView(){
         getChildren().clear();
         allFieldsAsView.clear();
         init();
+    }
+
+    /***************************** setters and getters **************************************/
+
+    public boolean isIsUpdated() {
+        return isUpdated.get();
+    }
+
+    public BooleanProperty isUpdatedProperty() {
+        return isUpdated;
+    }
+
+    public void setIsUpdated(boolean isUpdated) {
+        this.isUpdated.set(isUpdated);
     }
 }

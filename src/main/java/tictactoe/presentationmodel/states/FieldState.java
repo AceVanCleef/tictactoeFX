@@ -1,9 +1,7 @@
 package tictactoe.presentationmodel.states;
 
 import javafx.scene.shape.SVGPath;
-import tictactoe.presentationmodel.states.fieldstateimpl.EmptyState;
-import tictactoe.presentationmodel.states.fieldstateimpl.TakenByPlayer01;
-import tictactoe.presentationmodel.states.fieldstateimpl.TakenByPlayer02;
+import tictactoe.presentationmodel.states.fieldstateimpl.*;
 
 /**
  * represents the state of an individual BoardFieldPM. Possible states are listed in enum StatusCode.
@@ -14,7 +12,7 @@ public abstract class FieldState {
 
     /* lists the types of all available FieldStates */
     public enum StatusCode {
-        EMPTY, TAKEN_BY_PLAYER_01, TAKEN_BY_PLAYER_02
+        EMPTY, TAKEN_BY_PLAYER_01, TAKEN_BY_PLAYER_02, TAKEN_BY_PLAYER_03, TAKEN_BY_PLAYER_04
     }
 
     /** stores the StatusCode of this FieldState instance (e.g new TakenByPlayer01() -> TAKEN_BY_PLAYER_01)
@@ -26,7 +24,7 @@ public abstract class FieldState {
     private StatusCode statusCode;
 
 
-    //initializes fields of this abstract class for its subclasses.
+    //Constructor: initializes fields of this abstract class for its subclasses.
     protected FieldState(StatusCode statusCode) {
         this.statusCode = statusCode;
     }
@@ -36,6 +34,8 @@ public abstract class FieldState {
         switch (playerId){
             case 1: return new TakenByPlayer01();
             case 2: return new TakenByPlayer02();
+            case 3: return new TakenByPlayer03();
+            case 4: return new TakenByPlayer04();
             default: return new EmptyState();
         }
     }

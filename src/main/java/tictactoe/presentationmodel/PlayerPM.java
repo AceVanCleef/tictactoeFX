@@ -13,8 +13,11 @@ public class PlayerPM {
     /* identifies the player and allows player selection by ID. */
     private final IntegerProperty id = new SimpleIntegerProperty();
 
-    /* stores the name shown in the GUI */
+    /* stores the current name shown in the GUI */
     private final StringProperty name = new SimpleStringProperty();
+
+    /* stores the initial, unchangable name */
+    private final String initialName;
 
     /* stores how often a player has won */
     private final IntegerProperty score = new SimpleIntegerProperty();
@@ -23,6 +26,7 @@ public class PlayerPM {
     public PlayerPM(int id){
         setId(id);
         setName("Player " + id);
+        initialName = getName();
     }
 
 
@@ -60,5 +64,9 @@ public class PlayerPM {
 
     public void setScore(int score) {
         this.score.set(score);
+    }
+
+    public String getInitialName(){
+        return initialName;
     }
 }

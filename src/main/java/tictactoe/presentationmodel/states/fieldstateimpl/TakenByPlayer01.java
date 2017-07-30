@@ -8,6 +8,7 @@ import tictactoe.presentationmodel.states.FieldState;
  */
 public class TakenByPlayer01 extends FieldState {
 
+    //Constructor
     public TakenByPlayer01() {
         super(StatusCode.TAKEN_BY_PLAYER_01);
     }

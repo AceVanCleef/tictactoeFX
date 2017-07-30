@@ -2,6 +2,7 @@ package tictactoe.view;
 
 import javafx.scene.layout.BorderPane;
 import tictactoe.presentationmodel.RootPM;
+import tictactoe.view.simplecontrols.PlayerOverview;
 import tictactoe.view.util.ViewMixin;
 
 /**
@@ -13,8 +14,8 @@ public class RootPane extends BorderPane implements ViewMixin{
 
     private Header menuBar;
     private GameBoard gameBoard;
-    private PlayerOverview player01;
-    private PlayerOverview player02;
+    private PlayersPanel playersLeft;
+    private PlayersPanel playersRight;
     private ScoreBoardWrapper score;
 
     public RootPane(RootPM pm){
@@ -35,8 +36,8 @@ public class RootPane extends BorderPane implements ViewMixin{
 
         gameBoard = new GameBoard(pm);
 
-        player01 = new PlayerOverview(pm, "Player 01");
-        player02 = new PlayerOverview(pm, "Player 02");
+        playersLeft = new PlayersPanel(pm, PlayersPanel.PlayersPanelAlignment.LEFT);
+        playersRight = new PlayersPanel(pm, PlayersPanel.PlayersPanelAlignment.RIGHT);
 
         score = new ScoreBoardWrapper(pm);
     }
@@ -45,8 +46,8 @@ public class RootPane extends BorderPane implements ViewMixin{
     public void layoutParts() {
         setTop(menuBar);
         setCenter(gameBoard);
-        setLeft(player01);
-        setRight(player02);
+        setLeft(playersLeft);
+        setRight(playersRight);
         setBottom(score);
     }
 }
