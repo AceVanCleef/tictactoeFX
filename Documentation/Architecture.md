@@ -27,9 +27,7 @@ Since JavaFX' API offers these three powerful tools, they are heavily used in th
 
 ## View: The SceneGraph Structure
 
-![alt text](https://github.com/AceVanCleef/tictactoeFX/blob/master/Documentation/UML/2)%20SceneGraph-structure.png?raw=true "view")
-
-![alt text]( "Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/AceVanCleef/tictactoeFX/master/Documentation/UML/2-SceneGraph_structure.png "view")
 
 Note: Any class that holds a BooleanProperty isUpdated has/must have a bidirectional binding towards tictactoeFX.controller.NewGaemCheckList. This pseudocontroller checks whether all GUI components are refreshed when the end user wishes to start a new game (e.g. click on button triggers pm.newGame() ).
 
@@ -39,7 +37,7 @@ Note: Any class that holds a BooleanProperty isUpdated has/must have a bidirecti
 
 presentationmodel.RootPM is the entry point to all data and logic. That is why (almost) every class in tictactoeFX.view has a reference to it.
 
-![alt text](https://github.com/AceVanCleef/tictactoeFX/blob/master/Documentation/UML/1)%20RootPM's-knowledge-space.png?raw=true "presentationmodel")
+![alt text](https://raw.githubusercontent.com/AceVanCleef/tictactoeFX/master/Documentation/UML/1-RootPM's_knowledge_space.png "presentationmodel")
 
 Note that a GameBoard consists of multiple fields. Therefore, there current state is represented by BoardFieldPMs stored within a List named allFields. Also, TicTacToe consists of at least two players. 
 Since this project's purpose is to try out how it feels to play with more than just two players, it is possible to increase the amount of participants. Therefore, 
@@ -65,7 +63,7 @@ all view instances are finished with refreshing and if this is the case, it rese
 As you can see in the following UML diagram, the GameRules  is implemented using the Factory Pattern: RootPM calls the static getGameRulesFor(RuleSet gametype, GameStatePM gameState).
 Its parameter 'gametype' defines which subclass' instance is returned.
 
-![alt text](https://github.com/AceVanCleef/tictactoeFX/blob/master/Documentation/UML/3)%20GameRules-Factory-Pattern.png?raw=true "gamerules")
+![alt text](https://raw.githubusercontent.com/AceVanCleef/tictactoeFX/master/Documentation/UML/3-GameRules_Factory_Pattern.png "gamerules")
 
 
 
@@ -89,7 +87,7 @@ When you want to add new rules you have to...
 It is only necessary to add FieldStates when there are either more player or Game Design features which require a new kind of state. 
 Adding a new FieldState is quite easy thanks to the applied factory and state patterns.
 
-(https://github.com/AceVanCleef/tictactoeFX/blob/master/Documentation/UML/3)%20GameRules-Factory-Pattern.png?raw=true "gamerules")
+![alt text](https://raw.githubusercontent.com/AceVanCleef/tictactoeFX/master/Documentation/UML/4-FieldState_Factory_and_State_Pattern.png "fieldstates")
 
 
 To add new FieldState - subclasses, you have to...
@@ -104,5 +102,5 @@ To add new FieldState - subclasses, you have to...
 
 ## NewGame: setting Flags, Refreshing views and resetting Flags at the right moment
 
-(https://raw.githubusercontent.com/AceVanCleef/tictactoeFX/master/Documentation/UML/5)%20The-role-of-NewGameCheckList.png)%20GameRules-Factory-Pattern.png?raw=true "newgamechecklist")
+![alt text](https://raw.githubusercontent.com/AceVanCleef/tictactoeFX/master/Documentation/UML/5-The_role_of_NewGameCheckList.png "newgamechecklist")
 
