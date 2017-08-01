@@ -80,4 +80,25 @@ When you want to add new rules you have to...
  3) update RootPM's .defineRules() switch statement (compare to existing code)
  
 
-## 
+## Adding more FieldStates
+
+It is only necessary to add FieldStates when there are either more player or Game Design features which require a new kind of state. 
+Adding a new FieldState is quite easy thanks to the applied factory and state patterns.
+
+(https://github.com/AceVanCleef/tictactoeFX/blob/master/Documentation/UML/3)%20GameRules-Factory-Pattern.png?raw=true "gamerules")
+
+
+To add new FieldState - subclasses, you have to...
+1) add a value to the enum StatusCode which represents your desired name for your state. This enum is situated within state.FieldState
+2) Copy and paste for e.g. state.fieldstateimpl.EmptyState and change...
+- the class name
+- the constructor name and its argument to its super constructor
+- the SVG path string argument of the code line "cross.setContent(<change here>)" found in the getStateSymbol() - method. You can download any .svg - file and open it with a text editor. Search for its "path" attribute (could also be marked with "d=...").
+3) Update the switch statement within getStateByPlayerId() or create your own factory method.
+
+
+
+## NewGame: setting Flags, Refreshing views and resetting Flags at the right moment
+
+(https://raw.githubusercontent.com/AceVanCleef/tictactoeFX/master/Documentation/UML/5)%20The-role-of-NewGameCheckList.png)%20GameRules-Factory-Pattern.png?raw=true "newgamechecklist")
+
