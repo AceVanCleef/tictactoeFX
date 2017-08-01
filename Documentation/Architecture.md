@@ -29,6 +29,8 @@ Since JavaFX' API offers these three powerful tools, they are heavily used in th
 
 ![alt text](https://github.com/AceVanCleef/tictactoeFX/blob/master/Documentation/UML/2)%20SceneGraph-structure.png?raw=true "view")
 
+![alt text]( "Logo Title Text 1")
+
 Note: Any class that holds a BooleanProperty isUpdated has/must have a bidirectional binding towards tictactoeFX.controller.NewGaemCheckList. This pseudocontroller checks whether all GUI components are refreshed when the end user wishes to start a new game (e.g. click on button triggers pm.newGame() ).
 
 
@@ -64,6 +66,8 @@ As you can see in the following UML diagram, the GameRules  is implemented using
 Its parameter 'gametype' defines which subclass' instance is returned.
 
 ![alt text](https://github.com/AceVanCleef/tictactoeFX/blob/master/Documentation/UML/3)%20GameRules-Factory-Pattern.png?raw=true "gamerules")
+
+
 
 When you want to add new rules you have to...  
  1) in GameRules: 
