@@ -19,7 +19,7 @@ public class PlayerPM {
     /* stores the initial, unchangable name */
     private final String initialName;
 
-    /* stores how often a player has won */
+    /* #Score: stores how often a player has won */
     private final IntegerProperty score = new SimpleIntegerProperty();
 
 

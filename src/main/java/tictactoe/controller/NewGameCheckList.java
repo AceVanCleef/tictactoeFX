@@ -36,8 +36,11 @@ public class NewGameCheckList {
     /***************************** only related to tictactoe.view **************************************/
 
 
+    /* a flag: tells whether view.GameBoard has been refreshed. */
     private final BooleanProperty isGameBoardRefreshed = new SimpleBooleanProperty(false);
+    /* a flag: tells whether view.PlayersPanel on left side in view.RootPane has been refreshed.*/
     private final BooleanProperty isPlayersPanelLeftRefreshed = new SimpleBooleanProperty(false);
+    /* a flag: tells whether view.PlayersPanel on right side in view.RootPane has been refreshed. */
     private final BooleanProperty isPlayersPanelRightRefreshed = new SimpleBooleanProperty(false);
 
     //Note: bindings have to be done in the GUI components which should be updated/refreshed when a new game (round) should be started.
@@ -66,6 +69,10 @@ public class NewGameCheckList {
         });
     }
 
+    /**
+     * checks whether all GUI refreshed flags have been set.
+     * @return
+     */
     private boolean areAllGuiComponentsRefreshed(){
         return isIsGameBoardRefreshed() && isIsPlayersPanelLeftRefreshed() && isIsPlayersPanelRightRefreshed();
     }

@@ -44,7 +44,7 @@ public class RootPM {
     /* represents the state of the currently running game round. Can be queried by using isWon(), isDraw() and isContinuing(). */
     private GameStatePM gameState;
 
-    /* counts how many draws have happened */
+    /* #Score: counts how many draws have happened */
     private final IntegerProperty drawCount = new SimpleIntegerProperty(0);
 
 
@@ -210,11 +210,15 @@ public class RootPM {
      */
     public void newGame(int amountOfFields, int amountOfPlayers) {
         setAmountOfFields(amountOfFields);
-        setAmountOfPlayers(amountOfPlayers);
+        if (amountOfPlayers != allPlayers.size()) {
+            setAmountOfPlayers(amountOfPlayers);
+        }
 
         //reset collections
         allFields.clear();
-        allPlayers.clear();
+        if (amountOfPlayers != allPlayers.size()) {
+            allPlayers.clear();
+        }
 
         //prepare the GameBoard
         for (int i = 0; i < AMOUNT_OF_FIELDS; ++i) {
@@ -222,8 +226,15 @@ public class RootPM {
         }
 
         //prepare playerPMs
-        for (int i = 0; i < getAmountOfPlayers(); ++i) {
-            allPlayers.add(new PlayerPM(i + 1));    //no mather how many players, their IDs must be in numerical sequence.
+        if (amountOfPlayers != allPlayers.size()) {
+            for (int i = 0; i < getAmountOfPlayers(); ++i) {
+                allPlayers.add(new PlayerPM(i + 1));    //no mather how many players, their IDs must be in numerical sequence.
+            }
+        }
+
+        //reset drawCount
+        if (amountOfPlayers != allPlayers.size()) {
+            setDrawCount(0);
         }
 
         //this player begins the match

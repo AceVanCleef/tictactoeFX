@@ -57,6 +57,32 @@ public class RootPMTest {
 
         //then
         assertEquals(pm.getAllPlayers().get(0).getId(), currentPlayerId);
+
+
+
+        /* testing score behavior: when newGame() and amountOfPlayers == allPlayers.size(), then the score shouldn't change */
+        //given
+        int player01OriginalScore = pm.getAllPlayers().get(0).getScore();
+        int originalAmountOfDraws = pm.getDrawCount();
+        pm.newGame(25, 4);
+
+        //when
+        pm.getAllPlayers().get(0).setScore(3);  //three times won
+        int player01NewScore = pm.getAllPlayers().get(0).getScore();
+        pm.setDrawCount(2);
+        int newlAmountOfDraws = pm.getDrawCount();
+        pm.newGame(9, 4); //amountOfPlayers stays the same
+
+        //then
+        assertEquals(4, pm.getAllPlayers().size());
+        assertEquals(0, player01OriginalScore);
+        assertEquals(3, player01NewScore);
+        assertEquals(player01NewScore, pm.getAllPlayers().get(0).getScore());
+        assertNotEquals(player01OriginalScore, pm.getAllPlayers().get(0).getScore());
+        //testing draw count's value
+        assertNotEquals(originalAmountOfDraws, pm.getDrawCount());
+        assertEquals(newlAmountOfDraws, pm.getDrawCount());
+
     }
 
     @Test

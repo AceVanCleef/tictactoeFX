@@ -9,11 +9,13 @@ import tictactoe.presentationmodel.states.fieldstateimpl.EmptyState;
  */
 public class BoardFieldPM {
 
+    /* identifies the BoardField and allows BoardField selection by ID. */
     private final IntegerProperty id = new SimpleIntegerProperty();
 
-    /* the state of this BoardFieldPM (empty, taken by player 01 or player 02 */
+    /* the state of this BoardFieldPM (empty, taken by player 01, player 02 and so on.*/
     private final ObjectProperty<FieldState> state = new SimpleObjectProperty<>();
 
+    /* shall this BoardField still be clickable? */
     private final BooleanProperty disable = new SimpleBooleanProperty(false);
 
 
