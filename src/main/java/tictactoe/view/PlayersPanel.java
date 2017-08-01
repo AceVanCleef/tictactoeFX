@@ -13,6 +13,10 @@ import tictactoe.view.util.ViewMixin;
 import java.util.List;
 
 /**
+ * can differentiate itself whether it is situated left of BorderPane and therefore should
+ * only represent players with odd IDs or is situated right and should only represent
+ * players with even IDs.
+ *
  * Created by Degonas on 30.07.2017.
  */
 public class PlayersPanel extends VBox implements ViewMixin{

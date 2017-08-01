@@ -22,7 +22,7 @@ public class GameBoard extends GridPane implements ViewMixin {
     private final RootPM pm;
 
 
-    /* holds all fields of this gameboard. */
+    /* holds the GUI representation (namely BoardField) of each GameBoardPM. */
     private ObservableList<BoardField> allFieldsAsView = FXCollections.observableArrayList(); //#Frage: Warum ObjectProperty statt StringProperty (Funktionsweise enum)?
 
     /*#NewGame: is this view updated? */
@@ -107,6 +107,7 @@ public class GameBoard extends GridPane implements ViewMixin {
         return isUpdated.get();
     }
 
+    //used for bindings with BooleanProperty in NewGameCheckList
     public BooleanProperty isUpdatedProperty() {
         return isUpdated;
     }

@@ -49,6 +49,12 @@ public abstract class FieldState {
      */
     public abstract SVGPath getStateSymbol();
 
+    /**
+     * allows comparison of states between two (or more) BoardFieldPMs.
+     *
+     * Note: used in GameRules' isWon() and isDraw() - checks.
+     * @return
+     */
     public StatusCode getStatusCode() {
         return statusCode;
     }

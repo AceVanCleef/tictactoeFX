@@ -19,6 +19,7 @@ public abstract class GameRules {
         _2D_3X3, _2D_4X4, _2d_5x5
     }
 
+    /* gets updated when a win or draw condition is fullfilled. */
     private GameStatePM currentState;
 
     //initializes fields of this abstract class for its subclasses.
@@ -27,6 +28,12 @@ public abstract class GameRules {
     }
 
     //factory method
+    /**
+     * returns a GameRule instance according to the chosen RuleSet gametype.
+     * @param gametype determines which GameRules are returned.
+     * @param gameState - gets updated when certain conditions (win, draw) occure.
+     * @return GameRules - an instance of a subclass of GameRules
+     */
     public static GameRules getGameRulesFor(RuleSet gametype, GameStatePM gameState){
         if(gametype == RuleSet._2D_3X3) {
             return new Rules_2D_3x3(gameState);

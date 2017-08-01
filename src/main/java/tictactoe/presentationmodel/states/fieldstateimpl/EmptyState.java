@@ -8,7 +8,7 @@ import tictactoe.presentationmodel.states.FieldState;
  */
 public class EmptyState extends FieldState{
 
-
+    //Constructor
     public EmptyState() {
         super(StatusCode.EMPTY);
     }

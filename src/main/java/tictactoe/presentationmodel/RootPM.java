@@ -85,7 +85,10 @@ public class RootPM {
     }
 
     /**
+     * updates the current BoardFieldPM, the GameStatePM and the Score and returns
+     * the icon / symbol of the currently selected player (to the view.BoardField which called this method).
      *
+     * Note: called in view.BoardField's EventHandler
      * @param fieldId of currently selected / clicked field.
      * @return SVGPath of current player's icon / field marker.
      */
@@ -97,7 +100,7 @@ public class RootPM {
         //3) update current game state
         rules.updateGameState(allFields);   //check win conditions
 
-        //4) check if game cdntinues
+        //4) check if game continues
         if ( gameState.doesGameContinue() ) {
             //5a) switch to next player and mark the currentField with its FieldMarker
             nextPlayer();
@@ -134,6 +137,8 @@ public class RootPM {
 
     /** increments either the score of the winning player or the drawCount according to
      *  the current state of the game.
+     *
+     *  #Score
      */
     private void updateScore(){
         //check if current player has won
@@ -149,6 +154,7 @@ public class RootPM {
         }
     }
 
+    //#GameEnded (by draw or victory)
     private void disableAllBoardFieldPMs(){
         for (BoardFieldPM fieldPM : allFields) {
             fieldPM.setDisable(true);
@@ -251,13 +257,14 @@ public class RootPM {
     }
 
     /********** to divide players into two groups for GUI (BorderPane.setLeft() vs. BorderPane.setRight() ) ****************/
-
+    //used in view.PlayersPanel
     public List<PlayerPM> getPlayerPMsWithEvenID(){
         return allPlayers.stream()
                 .filter(playerPM -> playerPM.getId() % 2 == 0)
                 .collect(Collectors.toList());
     }
 
+    //used in view.PlayersPanel
     public List<PlayerPM> getPlayerPMsWithOddID(){
         return allPlayers.stream()
                 .filter(playerPM -> playerPM.getId() % 2 == 1)
@@ -318,7 +325,7 @@ public class RootPM {
      * the next lower natural Number n and stores n^2 as the value of AMOUNT_OF_FIELDS.
      * @param amountOfFields
      */
-    public void setAmountOfFields(int amountOfFields) {
+    private void setAmountOfFields(int amountOfFields) {
         if (amountOfFields < 9) {
             this.AMOUNT_OF_FIELDS = 9;     //the smallest game board size is 3x3.
             return; //shortcut.
@@ -339,7 +346,13 @@ public class RootPM {
         return AMOUNT_OF_FIELDS;
     }
 
-    public void setAmountOfPlayers(int amountOfPlayers) {
+    /**
+     * guarantees...
+     * - the minimum amount of players allowed is 2.
+     * - the maximum amount of players allowed is 4.
+     * @param amountOfPlayers
+     */
+    private void setAmountOfPlayers(int amountOfPlayers) {
         //minimal amount of players
         if (amountOfPlayers < 2) {
             AMOUNT_OF_PLAYERS = 2;

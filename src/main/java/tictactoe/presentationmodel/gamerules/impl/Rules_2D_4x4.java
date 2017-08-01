@@ -26,7 +26,7 @@ public class Rules_2D_4x4 extends GameRules {
         super(gameState);
     }
 
-
+    @Override
     public void updateGameState(ObservableList<BoardFieldPM> allFields) {
         super.updateGameState(allFields);
     }
