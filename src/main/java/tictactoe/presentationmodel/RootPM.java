@@ -231,6 +231,11 @@ public class RootPM {
             allFields.add(new BoardFieldPM(i));
         }
 
+        //reset drawCount
+        if (amountOfPlayers != allPlayers.size()) {
+            setDrawCount(0);
+        }
+
         //prepare playerPMs
         if (amountOfPlayers != allPlayers.size()) {
             for (int i = 0; i < getAmountOfPlayers(); ++i) {
@@ -238,10 +243,6 @@ public class RootPM {
             }
         }
 
-        //reset drawCount
-        if (amountOfPlayers != allPlayers.size()) {
-            setDrawCount(0);
-        }
 
         //this player begins the match
         setCurrentPlayerId(allPlayers.get(0).getId());
