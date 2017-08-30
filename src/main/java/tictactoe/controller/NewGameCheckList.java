@@ -42,6 +42,8 @@ public class NewGameCheckList {
     private final BooleanProperty isPlayersPanelLeftRefreshed = new SimpleBooleanProperty(false);
     /* a flag: tells whether view.PlayersPanel on right side in view.RootPane has been refreshed. */
     private final BooleanProperty isPlayersPanelRightRefreshed = new SimpleBooleanProperty(false);
+    /* a flag: tells whether view.PlayersPanel on right side in view.RootPane has been refreshed. */
+    private final BooleanProperty isScoreBoardPanelRefreshed = new SimpleBooleanProperty(false);
 
     //Note: bindings have to be done in the GUI components which should be updated/refreshed when a new game (round) should be started.
 
@@ -67,6 +69,12 @@ public class NewGameCheckList {
                 resetAllGuiFlags();
             }
         });
+        isScoreBoardPanelRefreshedProperty().addListener((observable, oldValue, newValue) -> {
+            if (areAllGuiComponentsRefreshed()){
+                pm.setSetUpNewGame(false);
+                resetAllGuiFlags();
+            }
+        });
     }
 
     /**
@@ -74,13 +82,17 @@ public class NewGameCheckList {
      * @return
      */
     private boolean areAllGuiComponentsRefreshed(){
-        return isIsGameBoardRefreshed() && isIsPlayersPanelLeftRefreshed() && isIsPlayersPanelRightRefreshed();
+        return isIsGameBoardRefreshed() &&
+                isIsPlayersPanelLeftRefreshed() &&
+                isIsPlayersPanelRightRefreshed() &&
+                isIsScoreBoardPanelRefreshed();
     }
 
     private void resetAllGuiFlags(){
         setIsGameBoardRefreshed(false);
         setIsPlayersPanelLeftRefreshed(false);
         setIsPlayersPanelRightRefreshed(false);
+        setIsScoreBoardPanelRefreshed(false);
     }
 
     /***************************** setters and getters **************************************/
@@ -131,5 +143,17 @@ public class NewGameCheckList {
 
     public void setIsPlayersPanelRightRefreshed(boolean isPlayersPanelRightRefreshed) {
         this.isPlayersPanelRightRefreshed.set(isPlayersPanelRightRefreshed);
+    }
+
+    public boolean isIsScoreBoardPanelRefreshed() {
+        return isScoreBoardPanelRefreshed.get();
+    }
+
+    public BooleanProperty isScoreBoardPanelRefreshedProperty() {
+        return isScoreBoardPanelRefreshed;
+    }
+
+    public void setIsScoreBoardPanelRefreshed(boolean isScoreBoardPanelRefreshed) {
+        this.isScoreBoardPanelRefreshed.set(isScoreBoardPanelRefreshed);
     }
 }
